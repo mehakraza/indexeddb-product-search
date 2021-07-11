@@ -8,13 +8,15 @@ const { Header, Content } = Layout;
 
 function App() {
   return (
-    <Layout>
-      <Header>Crealytics</Header>
-      <Content>
-        <SearchBar />
-        <ProductGrid />
-      </Content>
-    </Layout>
+    <div className="app">
+      <Layout>
+        <Header className="app__header">Crealytics</Header>
+        <Content className="app__content">
+          <SearchBar />
+          <ProductGrid />
+        </Content>
+      </Layout>
+    </div>
   );
 }
 
