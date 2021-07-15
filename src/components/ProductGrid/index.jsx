@@ -3,49 +3,29 @@ import { Card, List, Image } from 'antd';
 import { ProductModal } from '../ProductModal';
 import './index.css';
 
-export class ProductGrid extends Component {
+const { Meta } = Card;
 
+class ProductGrid extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       isModalVisible: false,
-      selectedItem: {},
+      selectedItem: null,
     }
   }
 
-  setIsModalVisible = (item) => {
+  toggleModalVisible = item => {
+    const { isModalVisible } = this.state;
+
     this.setState({
-      isModalVisible: !this.state.isModalVisible,
-      selectedItem: item,
+      isModalVisible: !isModalVisible,
+      selectedItem: !isModalVisible ? item : null,
     });
   }
 
-  handleCancel = () => {
-    this.setIsModalVisible(false);
-  };
-
   render() {
-    const { Meta } = Card;
+    const { products } = this.props;
     const { isModalVisible, selectedItem } = this.state;
-    const data = [];
-    for(let i = 0; i < 10; i++) {
-      data.push({
-        title: "Weekday THURSDAY Jeans Slim Fit black",
-        gtin: 2001007926858,
-        gender: "female",
-        sale_price: "39.95 EUR",
-        price: "39.95 EUR",
-        image_link: "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.4.jpg",
-        additional_image_link: [
-          "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@22.jpg",
-          "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@21.jpg",
-          "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@20.jpg",
-          "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@19.jpg",
-          "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@18.jpg",
-        ],
-      })
-    };
 
     return (
       <>
@@ -55,9 +35,9 @@ export class ProductGrid extends Component {
           onChange: page => {
             console.log(page);
           },
-          pageSize: 4,
+          pageSize: 100,
         }}
-        dataSource={data}
+        dataSource={products}
         renderItem={item => (
           <List.Item>
             <Card
@@ -69,7 +49,7 @@ export class ProductGrid extends Component {
                   preview={false}
                 />
               }
-              onClick={() => this.setIsModalVisible(item)}
+              onClick={() => this.toggleModalVisible(item)}
             >
               <Meta
                 title={item.title}
@@ -85,11 +65,12 @@ export class ProductGrid extends Component {
         <ProductModal
           item={selectedItem}
           isModalVisible={isModalVisible}
-          handleCancel={this.handleCancel}
+          handleCancel={this.toggleModalVisible}
         />
       </>
     )
   }
 }
 
-export default ProductGrid
+export default ProductGrid;
+

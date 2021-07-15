@@ -1,9 +1,9 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import Papa from 'papaparse';
-import SearchBar from '../SearchBar';
+import Search from '../Search';
 import ProductGrid from '../ProductGrid';
-import { populateDB } from '../../utils/IndexedDB';
+import { populateDB } from '../../utils/operations';
 import productsCSVFile from '../../products.csv';
 import './index.css';
 
@@ -22,7 +22,7 @@ class App extends React.Component {
     Papa.parse(productsCSVFile, {
       delimiter: ',',
       download: true,
-      header: turquoise,
+      header: true,
       dynamicTyping: true,
       complete: allProducts => {
         const products = allProducts.data;
@@ -35,11 +35,13 @@ class App extends React.Component {
     });
   }
 
+  setProducts = products => this.setState({ products });
+
   render() {
     const { products, populatingData } = this.state;
     let searchedContent;
 
-    if (populatingData) searchedContent = <Spin tip="Populating data. Please wait..." />;
+    if (populatingData) searchedContent = <Spin size='large' tip="Populating data. Please wait..." />;
     else if (!products.length) searchedContent = <h2>No matching product found</h2>;
     else searchedContent = <ProductGrid products={products} />;
 
@@ -48,7 +50,7 @@ class App extends React.Component {
         <Layout>
           <Header className="app__header">Crealytics</Header>
           <Content className="app__searchedContent">
-            <SearchBar />
+            <Search setProducts={this.setProducts} />
             {searchedContent}
           </Content>
         </Layout>
