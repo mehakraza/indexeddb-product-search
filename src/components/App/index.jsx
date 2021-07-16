@@ -1,57 +1,112 @@
-import React from 'react';
-import { Layout, Spin } from 'antd';
+import React, { createRef } from 'react';
+import { Layout } from 'antd';
 import Papa from 'papaparse';
 import Search from '../Search';
 import ProductGrid from '../ProductGrid';
-import { populateDB } from '../../utils/operations';
+import { populateDB, searchDB, PAGE_SIZE } from '../../utils/operations';
 import productsCSVFile from '../../products.csv';
 import './index.css';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
+
+const PARSE_CONFIG = {
+  delimiter: ',',
+  download: true,
+  header: true,
+  dynamicTyping: true,
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       populatingData: false,
+      searching: false,
       products: [],
+      pageNum: 1,
+      pagesAvailableToLoad: false,
+      searchTerm: '',
+      gender: undefined,
+      onSale: false,
     };
+    this.searchRef = createRef();
   }
 
   componentDidMount() {
     Papa.parse(productsCSVFile, {
-      delimiter: ',',
-      download: true,
-      header: true,
-      dynamicTyping: true,
+      ...PARSE_CONFIG,
       complete: allProducts => {
         const products = allProducts.data;
         this.setState({ populatingData: true });
         populateDB(products).then(() => {
           this.setState({ populatingData: false });
+          this.performSearch();
         });
       },
       error: e => console.log(e),
     });
   }
 
-  setProducts = products => this.setState({ products });
+  componentDidUpdate(prevProps, prevState) {
+    const searchables = ['pageNum', 'gender', 'onSale', 'searchTerm'];
+    let changedKey;
+    const shouldSearch = searchables.some(key => {
+      if (prevState[key] !== this.state[key]) {
+        changedKey = key;
+        return key !== searchables[0] || this.state[key] !== 1;
+      }
+      return false;
+    });
+    if (shouldSearch) {
+      const isNewSearch = changedKey !== searchables[0];
+      this.performSearch(isNewSearch);
+    }
+  }
+
+  performSearch = async (isNewSearch) => {
+    const { populatingData, searchTerm, gender, onSale, pageNum } = this.state;
+    if (populatingData) return;
+
+    this.setState({ searching: true, pagesAvailableToLoad: false });
+    const newProducts = await searchDB(searchTerm, gender, onSale, pageNum);
+    const pagesAvailableToLoad = newProducts.length === PAGE_SIZE;
+    if (isNewSearch) {
+      this.setState({ searching: false, pagesAvailableToLoad, products: newProducts, pageNum: 1 });
+      this.searchRef.current.focus();
+    } else {
+      this.setState(({ products }) => ({ searching: false, pagesAvailableToLoad, products: [...products, ...newProducts]}));
+    }
+  };
+
+  setSearchTerm = searchTerm => this.setState({ searchTerm });
+  setGender = gender => this.setState({ gender });
+  setOnSale = onSale => this.setState({ onSale });
+  incrementPageNum = () => this.setState(({ pageNum }) => ({ pageNum: pageNum + 1 }));
 
   render() {
-    const { products, populatingData } = this.state;
-    let searchedContent;
-
-    if (populatingData) searchedContent = <Spin size='large' tip="Populating data. Please wait..." />;
-    else if (!products.length) searchedContent = <h2>No matching product found</h2>;
-    else searchedContent = <ProductGrid products={products} />;
+    const { products, populatingData, searching, searchTerm, gender, onSale, pagesAvailableToLoad } = this.state;
 
     return (
       <div className="app">
         <Layout>
-          <Header className="app__header">Crealytics</Header>
-          <Content className="app__searchedContent">
-            <Search setProducts={this.setProducts} />
-            {searchedContent}
+          <Content className="app__content">
+            <Search
+              searchRef={this.searchRef}
+              searching={searching}
+              setSearchTerm={this.setSearchTerm}
+              setGender={this.setGender}
+              setOnSale={this.setOnSale}
+              searchTerm={searchTerm}
+              gender={gender}
+              onSale={onSale}
+            />
+            <ProductGrid
+              populatingData={populatingData}
+              searching={searching}
+              products={products}
+              incrementPageNum={this.incrementPageNum}
+              showLoadMore={!populatingData && !searching && pagesAvailableToLoad}
+            />
           </Content>
         </Layout>
       </div>

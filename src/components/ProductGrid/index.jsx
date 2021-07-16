@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Card, List, Image } from 'antd';
+import { Button, Card, List, Image } from 'antd';
 import { ProductModal } from '../ProductModal';
 import './index.css';
-
-const { Meta } = Card;
 
 class ProductGrid extends Component {
   constructor(props) {
@@ -23,43 +21,57 @@ class ProductGrid extends Component {
     });
   }
 
+  onLoadMore = () => {
+    const { incrementPageNum } = this.props;
+    incrementPageNum();
+  }
+
   render() {
-    const { products } = this.props;
+    const { products, populatingData, searching, showLoadMore } = this.props;
     const { isModalVisible, selectedItem } = this.state;
+
+    const loadMore =
+      showLoadMore ? (
+          <Button className="product-grid__btn-load-more" onClick={this.onLoadMore}>Load more</Button>
+      ) : null;
 
     return (
       <>
-      <List
-        grid={{ gutter: 16, column: 4 }}
-        pagination={{
-          onChange: page => {
-            console.log(page);
-          },
-          pageSize: 100,
-        }}
-        dataSource={products}
-        renderItem={item => (
-          <List.Item>
-            <Card
-              style={{ width: 300 }}
-              cover={
-                <Image
-                  alt={item.title}
-                  src={item.image_link}
-                  preview={false}
+        <List
+          loading={{
+            spinning: populatingData || searching,
+            size: 'large',
+            tip: populatingData ? 'Loading data. Please wait...' : 'Searching...'
+          }}
+          grid={{ gutter: 16, column: 4 }}
+          locale= {{
+            emptyText: 'No matching product found',
+          }}
+          loadMore={loadMore}
+          dataSource={products}
+          renderItem={item => (
+            <List.Item>
+              <Card
+                className="product-grid__product-card"
+                hoverable
+                cover={
+                  <Image
+                    alt={item.title}
+                    src={item.image_link}
+                    preview={false}
+                  />
+                }
+                onClick={() => this.toggleModalVisible(item)}
+              >
+                <Card.Meta
+                  title={item.title}
                 />
-              }
-              onClick={() => this.toggleModalVisible(item)}
-            >
-              <Meta
-                title={item.title}
-              />
-              <div>GTIN: {item.gtin}</div>
-              <div>Gender: {item.gender}</div>
-              <div>Price: {item.price}</div>
-              <div>Sale Price: {item.sale_price}</div>
-            </Card>
-          </List.Item>
+                <div>GTIN: {item.gtin}</div>
+                <div>Gender: {item.gender}</div>
+                <div>Price: {item.price}</div>
+                <div>Sale Price: {item.sale_price}</div>
+              </Card>
+            </List.Item>
           )}
         />
         <ProductModal

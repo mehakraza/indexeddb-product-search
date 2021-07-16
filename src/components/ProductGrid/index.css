@@ -1,7 +1,5 @@
-@import '~antd/dist/antd.css';
-
-
-.site-card-wrapper {
-  padding: 30px;
-  background: #ececec;
+.product-grid__btn-load-more {
+  text-align: center;
+  margin: 12px 46%;
+  height: 32px;
 }

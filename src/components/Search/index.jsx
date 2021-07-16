@@ -1,35 +1,57 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import debounce from 'lodash.debounce';
-import { Spin, Input } from 'antd';
-import { searchDB } from '../../utils/operations';
+import React from 'react';
+import { Row, Col, Spin, Input, Select, Checkbox } from 'antd';
+import './index.css';
 
-const Search = ({ setProducts }) => {
-  const [searching, setSearching] = useState(false);
+const GENDERS = ['male', 'female', 'unisex'];
 
-  const debouncedSearch = useMemo(
-    () => debounce(async searchTerm => {
-      setSearching(true);
-      const products = await searchDB(searchTerm);
-      setProducts(products);
-      setSearching(false);
-    }, 1000),
-    [setProducts],
+const Search = ({ searchRef, searching, setSearchTerm, setGender, setOnSale, searchTerm, gender, onSale }) => {
+  const handleOnSaleChange = e => {
+    const newOnSale = e.target.checked;
+    setOnSale(newOnSale);
+  };
+
+  const handleSearchChange = e => {
+    if (e.key === 'Enter') return;
+
+    setSearchTerm(`${searchTerm}${e.key}`);
+  }
+
+  const searchBar = (
+    <div className="search">
+      <Row align="middle" justify="space-around" gutter={16}>
+        <Col offset={2} span={16}>
+          <Input
+            placeholder="Search by title"
+            onKeyPress={handleSearchChange}
+            onChange={e => { if (!e.target.value) setSearchTerm('') }}
+            value={searchTerm}
+            allowClear={true}
+            ref={searchRef}
+          />
+        </Col>
+        <Col span={3}>
+          <Select
+            style={{ width: '100%' }}
+            placeholder="Filter by gender"
+            value={gender}
+            onChange={setGender}
+            allowClear
+          >
+            {GENDERS.map(g => <Select.Option key={g} value={g}>{g}</Select.Option>)}
+          </Select>
+        </Col>
+        <Col span={3}>
+          <Checkbox checked={onSale} onChange={handleOnSaleChange}>On Sale</Checkbox>
+        </Col>
+      </Row>
+    </div>
   );
 
-  const handleChange = useCallback(
-    e => debouncedSearch(e.target.value),
-    [debouncedSearch],
+  if (searching) return (
+    <Spin size='large' tip="Searching...">{searchBar}</Spin>
   );
 
-  if (searching) return <Spin size='large' />;
-
-  return (
-    <Input
-      placeholder="Enter search term"
-      allowClear={true}
-      onKeyUp={handleChange}
-    />
-  );
+  return searchBar;
 }
 
 export default Search;
