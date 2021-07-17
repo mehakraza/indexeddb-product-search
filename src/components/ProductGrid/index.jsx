@@ -49,13 +49,14 @@ class ProductGrid extends Component {
           }}
           loadMore={loadMore}
           dataSource={products}
-          renderItem={item => (
+          renderItem={(item, index) => (
             <List.Item>
               <Card
                 className="product-grid__product-card"
                 hoverable
                 cover={
                   <Image
+                    key={`${item.title}${index}`}
                     alt={item.title}
                     src={item.image_link}
                     preview={false}

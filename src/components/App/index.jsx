@@ -3,11 +3,12 @@ import { Layout } from 'antd';
 import Papa from 'papaparse';
 import Search from '../Search';
 import ProductGrid from '../ProductGrid';
-import { populateDB, searchDB, PAGE_SIZE } from '../../utils/operations';
+import { getAllWords, shouldPopulate, populateDB, markPopulated, searchDB, PAGE_SIZE } from '../../utils/operations';
 import productsCSVFile from '../../products.csv';
 import './index.css';
 
 const { Content } = Layout;
+let buffer = [];
 
 const PARSE_CONFIG = {
   delimiter: ',',
@@ -32,16 +33,57 @@ class App extends React.Component {
     this.searchRef = createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ populatingData: true });
+    const shouldPopulateDB = await shouldPopulate();
+    if (!shouldPopulateDB) {
+      this.setState({ populatingData: false });
+      this.performSearch();
+      return;
+    }
+
+    let firstLoad = true;
     Papa.parse(productsCSVFile, {
       ...PARSE_CONFIG,
-      complete: allProducts => {
-        const products = allProducts.data;
-        this.setState({ populatingData: true });
-        populateDB(products).then(() => {
-          this.setState({ populatingData: false });
-          this.performSearch();
+      step: async ({ data: product }) => {
+        let gender = product.gender;
+        if (product.gender && product.gender.toLowerCase) {
+          gender = product.gender.toLowerCase();
+        }
+
+        const [price, priceCurrency] = product.price ? product.price.split(' ') : [0, 'EUR'];
+        const [salePrice, salePriceCurrency] = product.sale_price ? product.sale_price.split(' ') : [0, 'EUR'];
+        const onSale = +price > +salePrice;
+
+        buffer.push({
+          ...product,
+          titleWords: getAllWords(product.title),
+          gender,
+          price,
+          priceCurrency,
+          salePrice,
+          salePriceCurrency,
+          onSale,
         });
+
+        if (buffer.length === PAGE_SIZE) {
+          const chunk = buffer.slice();
+          buffer = [];
+          await populateDB(chunk);
+          if (firstLoad) {
+            firstLoad = false;
+            this.setState({ populatingData: false });
+            this.performSearch();
+          }
+        }
+      },
+      complete: async () => {
+        if (buffer.length) {
+          // Add remaining products in buffer (< PAGE_SIZE)
+          await populateDB(buffer);
+          buffer = [];
+        }
+        markPopulated();
       },
       error: e => console.log(e),
     });
@@ -64,8 +106,7 @@ class App extends React.Component {
   }
 
   performSearch = async (isNewSearch) => {
-    const { populatingData, searchTerm, gender, onSale, pageNum } = this.state;
-    if (populatingData) return;
+    const { searchTerm, gender, onSale, pageNum } = this.state;
 
     this.setState({ searching: true, pagesAvailableToLoad: false });
     const newProducts = await searchDB(searchTerm, gender, onSale, pageNum);
@@ -92,7 +133,7 @@ class App extends React.Component {
           <Content className="app__content">
             <Search
               searchRef={this.searchRef}
-              searching={searching}
+              disabled={populatingData || searching}
               setSearchTerm={this.setSearchTerm}
               setGender={this.setGender}
               setOnSale={this.setOnSale}

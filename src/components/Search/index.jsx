@@ -1,10 +1,10 @@
 import React from 'react';
-import { Row, Col, Spin, Input, Select, Checkbox } from 'antd';
+import { Row, Col, Input, Select, Checkbox } from 'antd';
 import './index.css';
 
 const GENDERS = ['male', 'female', 'unisex'];
 
-const Search = ({ searchRef, searching, setSearchTerm, setGender, setOnSale, searchTerm, gender, onSale }) => {
+const Search = ({ searchRef, disabled, setSearchTerm, setGender, setOnSale, searchTerm, gender, onSale }) => {
   const handleOnSaleChange = e => {
     const newOnSale = e.target.checked;
     setOnSale(newOnSale);
@@ -21,6 +21,8 @@ const Search = ({ searchRef, searching, setSearchTerm, setGender, setOnSale, sea
       <Row align="middle" justify="space-around" gutter={16}>
         <Col offset={2} span={16}>
           <Input
+            className="search__title"
+            disabled={disabled}
             placeholder="Search by title"
             onKeyPress={handleSearchChange}
             onChange={e => { if (!e.target.value) setSearchTerm('') }}
@@ -31,24 +33,35 @@ const Search = ({ searchRef, searching, setSearchTerm, setGender, setOnSale, sea
         </Col>
         <Col span={3}>
           <Select
-            style={{ width: '100%' }}
+            className="search__gender"
+            disabled={disabled}
             placeholder="Filter by gender"
             value={gender}
             onChange={setGender}
             allowClear
           >
-            {GENDERS.map(g => <Select.Option key={g} value={g}>{g}</Select.Option>)}
+            {GENDERS.map(g => (
+              <Select.Option
+                key={g}
+                value={g}
+              >
+                {g}
+              </Select.Option>
+            ))}
           </Select>
         </Col>
         <Col span={3}>
-          <Checkbox checked={onSale} onChange={handleOnSaleChange}>On Sale</Checkbox>
+          <Checkbox
+            className="search__on-sale"
+            disabled={disabled}
+            checked={onSale}
+            onChange={handleOnSaleChange}
+          >
+            On Sale
+          </Checkbox>
         </Col>
       </Row>
     </div>
-  );
-
-  if (searching) return (
-    <Spin size='large' tip="Searching...">{searchBar}</Spin>
   );
 
   return searchBar;

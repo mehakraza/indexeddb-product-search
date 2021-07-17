@@ -2,3 +2,7 @@
   min-height: 72px;
   padding-top: 20px;
 }
+
+.search__gender {
+  width: 100%;
+}
