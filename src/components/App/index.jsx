@@ -3,7 +3,8 @@ import { Layout } from 'antd';
 import Papa from 'papaparse';
 import Search from '../Search';
 import ProductGrid from '../ProductGrid';
-import { getAllWords, shouldPopulate, populateDB, markPopulated, searchDB, PAGE_SIZE } from '../../utils/operations';
+import { shouldPopulate, populateDB, markPopulated, searchDB, PAGE_SIZE } from '../../utils/operations';
+import { getAllWords } from '../../utils/string';
 import productsCSVFile from '../../products.csv';
 import './index.css';
 

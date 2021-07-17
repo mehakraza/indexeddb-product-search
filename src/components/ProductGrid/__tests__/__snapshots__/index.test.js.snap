@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductGrid rendering should render correctly when products are available 1`] = `
+<Fragment>
+  <List
+    dataSource={
+      Array [
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.41.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926858,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.41.jpg",
+          "price": "30.25",
+          "sale_price": "30.25",
+          "title": "Product Title 1",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.42.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926859,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.42.jpg",
+          "price": "17",
+          "sale_price": "15",
+          "title": "Product Title 2",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.43.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "male",
+          "gtin": 2001007926860,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.43.jpg",
+          "price": "33.25",
+          "sale_price": "29.25",
+          "title": "Product Title 3",
+        },
+      ]
+    }
+    grid={
+      Object {
+        "column": 4,
+        "gutter": 16,
+      }
+    }
+    loadMore={
+      <Button
+        className="product-grid__btn-load-more"
+        onClick={[Function]}
+      >
+        Load more
+      </Button>
+    }
+    loading={
+      Object {
+        "size": "large",
+        "spinning": false,
+        "tip": "Searching...",
+      }
+    }
+    locale={
+      Object {
+        "emptyText": "No matching product found",
+      }
+    }
+    renderItem={[Function]}
+  />
+  <ProductModal
+    handleCancel={[Function]}
+    isModalVisible={false}
+    product={null}
+  />
+</Fragment>
+`;
+
+exports[`ProductGrid rendering should render correctly when products are being loaded 1`] = `
+<Fragment>
+  <List
+    dataSource={
+      Array [
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.41.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926858,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.41.jpg",
+          "price": "30.25",
+          "sale_price": "30.25",
+          "title": "Product Title 1",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.42.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926859,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.42.jpg",
+          "price": "17",
+          "sale_price": "15",
+          "title": "Product Title 2",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.43.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "male",
+          "gtin": 2001007926860,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.43.jpg",
+          "price": "33.25",
+          "sale_price": "29.25",
+          "title": "Product Title 3",
+        },
+      ]
+    }
+    grid={
+      Object {
+        "column": 4,
+        "gutter": 16,
+      }
+    }
+    loadMore={
+      <Button
+        className="product-grid__btn-load-more"
+        onClick={[Function]}
+      >
+        Load more
+      </Button>
+    }
+    loading={
+      Object {
+        "size": "large",
+        "spinning": true,
+        "tip": "Loading data. Please wait...",
+      }
+    }
+    locale={
+      Object {
+        "emptyText": "No matching product found",
+      }
+    }
+    renderItem={[Function]}
+  />
+  <ProductModal
+    handleCancel={[Function]}
+    isModalVisible={false}
+    product={null}
+  />
+</Fragment>
+`;
+
+exports[`ProductGrid rendering should render correctly when products are being searched 1`] = `
+<Fragment>
+  <List
+    dataSource={
+      Array [
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.41.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926858,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.41.jpg",
+          "price": "30.25",
+          "sale_price": "30.25",
+          "title": "Product Title 1",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.42.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926859,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.42.jpg",
+          "price": "17",
+          "sale_price": "15",
+          "title": "Product Title 2",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.43.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "male",
+          "gtin": 2001007926860,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.43.jpg",
+          "price": "33.25",
+          "sale_price": "29.25",
+          "title": "Product Title 3",
+        },
+      ]
+    }
+    grid={
+      Object {
+        "column": 4,
+        "gutter": 16,
+      }
+    }
+    loadMore={
+      <Button
+        className="product-grid__btn-load-more"
+        onClick={[Function]}
+      >
+        Load more
+      </Button>
+    }
+    loading={
+      Object {
+        "size": "large",
+        "spinning": true,
+        "tip": "Searching...",
+      }
+    }
+    locale={
+      Object {
+        "emptyText": "No matching product found",
+      }
+    }
+    renderItem={[Function]}
+  />
+  <ProductModal
+    handleCancel={[Function]}
+    isModalVisible={false}
+    product={null}
+  />
+</Fragment>
+`;
+
+exports[`ProductGrid rendering should render correctly when products are empty 1`] = `
+<Fragment>
+  <List
+    dataSource={Array []}
+    grid={
+      Object {
+        "column": 4,
+        "gutter": 16,
+      }
+    }
+    loadMore={
+      <Button
+        className="product-grid__btn-load-more"
+        onClick={[Function]}
+      >
+        Load more
+      </Button>
+    }
+    loading={
+      Object {
+        "size": "large",
+        "spinning": false,
+        "tip": "Searching...",
+      }
+    }
+    locale={
+      Object {
+        "emptyText": "No matching product found",
+      }
+    }
+    renderItem={[Function]}
+  />
+  <ProductModal
+    handleCancel={[Function]}
+    isModalVisible={false}
+    product={null}
+  />
+</Fragment>
+`;
+
+exports[`ProductGrid rendering should render correctly when showLoadMore is false 1`] = `
+<Fragment>
+  <List
+    dataSource={
+      Array [
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.41.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926858,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.41.jpg",
+          "price": "30.25",
+          "sale_price": "30.25",
+          "title": "Product Title 1",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.42.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "female",
+          "gtin": 2001007926859,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.42.jpg",
+          "price": "17",
+          "sale_price": "15",
+          "title": "Product Title 2",
+        },
+        Object {
+          "additional_image_link": "https://mosaic01.ztat.net/12.4.jpg, https://mosaic01.ztat.net/12.43.jpg, https://mosaic01.ztat.net/12.4.jpg",
+          "gender": "male",
+          "gtin": 2001007926860,
+          "image_link": "https://mosaic01.ztat.net/vgs/media/large/WE/B2/1N/00/HQ/11/WEB21N00H-Q11@12.43.jpg",
+          "price": "33.25",
+          "sale_price": "29.25",
+          "title": "Product Title 3",
+        },
+      ]
+    }
+    grid={
+      Object {
+        "column": 4,
+        "gutter": 16,
+      }
+    }
+    loadMore={null}
+    loading={
+      Object {
+        "size": "large",
+        "spinning": false,
+        "tip": "Searching...",
+      }
+    }
+    locale={
+      Object {
+        "emptyText": "No matching product found",
+      }
+    }
+    renderItem={[Function]}
+  />
+  <ProductModal
+    handleCancel={[Function]}
+    isModalVisible={false}
+    product={null}
+  />
+</Fragment>
+`;

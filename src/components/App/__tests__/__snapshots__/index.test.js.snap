@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render correctly 1`] = `
+<div
+  className="app"
+>
+  <Layout>
+    <Content
+      className="app__content"
+    >
+      <Search
+        disabled={false}
+        onSale={false}
+        searchRef={
+          Object {
+            "current": null,
+          }
+        }
+        searchTerm=""
+        setGender={[Function]}
+        setOnSale={[Function]}
+        setSearchTerm={[Function]}
+      />
+      <ProductGrid
+        incrementPageNum={[Function]}
+        populatingData={false}
+        products={Array []}
+        searching={false}
+        showLoadMore={false}
+      />
+    </Content>
+  </Layout>
+</div>
+`;

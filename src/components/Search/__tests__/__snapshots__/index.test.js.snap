@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search rendering should render correctly 1`] = `
+<div
+  className="search"
+>
+  <Row
+    align="middle"
+    gutter={16}
+    justify="space-around"
+  >
+    <Col
+      offset={2}
+      span={16}
+    >
+      <Input
+        allowClear={true}
+        className="search__title"
+        disabled={false}
+        onChange={[Function]}
+        onKeyPress={[Function]}
+        placeholder="Search by title"
+        type="text"
+        value="searchTerm"
+      />
+    </Col>
+    <Col
+      span={3}
+    >
+      <ForwardRef(InternalSelect)
+        allowClear={true}
+        className="search__gender"
+        disabled={false}
+        onChange={[MockFunction]}
+        placeholder="Filter by gender"
+        value="gender"
+      >
+        <Option
+          key="male"
+          value="male"
+        >
+          male
+        </Option>
+        <Option
+          key="female"
+          value="female"
+        >
+          female
+        </Option>
+        <Option
+          key="unisex"
+          value="unisex"
+        >
+          unisex
+        </Option>
+      </ForwardRef(InternalSelect)>
+    </Col>
+    <Col
+      span={3}
+    >
+      <Checkbox
+        checked="onSale"
+        className="search__on-sale"
+        disabled={false}
+        onChange={[Function]}
+      >
+        On Sale
+      </Checkbox>
+    </Col>
+  </Row>
+</div>
+`;

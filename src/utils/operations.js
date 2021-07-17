@@ -1,15 +1,5 @@
 import db from './db';
-
-export const PAGE_SIZE = 100;
-
-export const getAllWords = text => {
-  if (!text) return '';
-
-  const allWordsIncludingDups = text.split(' ');
-  const wordSet = new Set();
-  allWordsIncludingDups.forEach(word => wordSet.add(word));
-  return Array.from(wordSet);
-}
+import { PAGE_SIZE  } from './constants';
 
 export const markPopulated = async () => {
   return db.transaction('rw', db.isPopulated, () => {
