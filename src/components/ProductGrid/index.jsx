@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Card, List, Image } from 'antd';
-import { ProductModal } from '../ProductModal';
+import { Button, List } from 'antd';
+import ProductModal from '../ProductModal';
+import ProductCard from '../ProductCard';
 import './index.css';
 
 class ProductGrid extends Component {
@@ -8,7 +9,7 @@ class ProductGrid extends Component {
     super(props)
     this.state = {
       isModalVisible: false,
-      selectedItem: null,
+      selectedProduct: null,
     }
   }
 
@@ -17,7 +18,7 @@ class ProductGrid extends Component {
 
     this.setState({
       isModalVisible: !isModalVisible,
-      selectedItem: !isModalVisible ? item : null,
+      selectedProduct: !isModalVisible ? item : null,
     });
   }
 
@@ -28,7 +29,7 @@ class ProductGrid extends Component {
 
   render() {
     const { products, populatingData, searching, showLoadMore } = this.props;
-    const { isModalVisible, selectedItem } = this.state;
+    const { isModalVisible, selectedProduct } = this.state;
 
     const loadMore =
       showLoadMore ? (
@@ -50,33 +51,15 @@ class ProductGrid extends Component {
           loadMore={loadMore}
           dataSource={products}
           renderItem={(item, index) => (
-            <List.Item>
-              <Card
-                className="product-grid__product-card"
-                hoverable
-                cover={
-                  <Image
-                    key={`${item.title}${index}`}
-                    alt={item.title}
-                    src={item.image_link}
-                    preview={false}
-                  />
-                }
-                onClick={() => this.toggleModalVisible(item)}
-              >
-                <Card.Meta
-                  title={item.title}
-                />
-                <div>GTIN: {item.gtin}</div>
-                <div>Gender: {item.gender}</div>
-                <div>Price: {item.price}</div>
-                <div>Sale Price: {item.sale_price}</div>
-              </Card>
-            </List.Item>
+            <ProductCard
+              product={item}
+              index={index}
+              toggleModalVisible={this.toggleModalVisible}
+            />
           )}
         />
         <ProductModal
-          item={selectedItem}
+          product={selectedProduct}
           isModalVisible={isModalVisible}
           handleCancel={this.toggleModalVisible}
         />
