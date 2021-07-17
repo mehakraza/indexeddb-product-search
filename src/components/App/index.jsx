@@ -3,7 +3,8 @@ import { Layout } from 'antd';
 import Papa from 'papaparse';
 import Search from '../Search';
 import ProductGrid from '../ProductGrid';
-import { shouldPopulate, populateDB, markPopulated, searchDB, PAGE_SIZE } from '../../utils/operations';
+import { shouldPopulate, populateDB, markPopulated, searchDB } from '../../utils/operations';
+import { PAGE_SIZE } from '../../utils/constants';
 import { getAllWords } from '../../utils/string';
 import productsCSVFile from '../../products.csv';
 import './index.css';
@@ -18,6 +19,9 @@ const PARSE_CONFIG = {
   dynamicTyping: true,
 };
 
+/**
+ * App Component: Root component, keeps all the application state, does DB inserts on Mount
+ */
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -106,6 +110,10 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * Performs Indexed DB search based on filter/search params in App state
+   * @param {boolean} isNewSearch
+   */
   performSearch = async (isNewSearch) => {
     const { searchTerm, gender, onSale, pageNum } = this.state;
 
@@ -120,9 +128,16 @@ class App extends React.Component {
     }
   };
 
+  /**
+   * Update App state with selected filter/search params (which then triggers performSearch)
+   */
   setSearchTerm = searchTerm => this.setState({ searchTerm });
   setGender = gender => this.setState({ gender });
   setOnSale = onSale => this.setState({ onSale });
+
+  /**
+   * Updates pageNum in App state (which then triggers performSearch to fetch next page items)
+   */
   incrementPageNum = () => this.setState(({ pageNum }) => ({ pageNum: pageNum + 1 }));
 
   render() {

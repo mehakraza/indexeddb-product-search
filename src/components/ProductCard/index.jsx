@@ -3,6 +3,9 @@ import { List, Card, Image } from 'antd';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { FALLBACK_IMG } from '../../utils/constants';
 
+/**
+ * ProductCard Component: Renders Single Product details in Card format (Used in ProductGrid)
+ */
 const ProductCard = ({ product, index, toggleModalVisible }) => (
   <List.Item>
     <Card

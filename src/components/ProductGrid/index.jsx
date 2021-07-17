@@ -4,6 +4,9 @@ import ProductModal from '../ProductModal';
 import ProductCard from '../ProductCard';
 import './index.css';
 
+/**
+ * ProductGrid Component: Renders all ProductCards (paginated, with a load more button interface)
+ */
 class ProductGrid extends Component {
   constructor(props) {
     super(props)
@@ -13,6 +16,10 @@ class ProductGrid extends Component {
     }
   }
 
+  /**
+   * Opens ProductModal and sets clicked Product as selectedProduct to be shown in ProductModal
+   * @param {Object} item
+   */
   toggleModalVisible = item => {
     const { isModalVisible } = this.state;
 
@@ -22,6 +29,9 @@ class ProductGrid extends Component {
     });
   }
 
+  /**
+   * Increments pageNum in App state (which triggers loading of new page items)
+   */
   onLoadMore = () => {
     const { incrementPageNum } = this.props;
     incrementPageNum();

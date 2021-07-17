@@ -4,6 +4,9 @@ import './index.css';
 
 const GENDERS = ['male', 'female', 'unisex'];
 
+/**
+ * Search Component: Contains Input fields to change search/filter params in App state (which then triggers new search)
+ */
 const Search = ({ searchRef, disabled, setSearchTerm, setGender, setOnSale, searchTerm, gender, onSale }) => {
   const handleOnSaleChange = e => {
     const newOnSale = e.target.checked;
